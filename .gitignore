@@ -1,0 +1,23 @@
+# Build outputs
+Debug/
+Release/
+x64/
+x86/
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# Visual Studio-ს შუალედური ფაილები
+calculator v3/
+
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.sdf
+*.opensdf
+
+# Runtime-generated
+history.txt
