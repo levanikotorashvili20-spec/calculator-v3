@@ -18,6 +18,7 @@ calculator v3/
 *.vcxproj.user
 *.sdf
 *.opensdf
+*.aps
 
 # Runtime-generated
 history.txt
