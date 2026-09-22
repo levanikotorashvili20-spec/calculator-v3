@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <dwmapi.h>
+#include "../resources/resource.h"
 
 #pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib, "dwmapi.lib")
@@ -256,6 +257,10 @@ int APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     wc.lpfnWndProc = WndProc;
     wc.hInstance = hInstance;
     wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APP));
+    wc.hIconSm = (HICON)LoadImage(hInstance, MAKEINTRESOURCE(IDI_APP), IMAGE_ICON,
+        GetSystemMetrics(SM_CXSMICON),
+        GetSystemMetrics(SM_CYSMICON), 0);
     wc.hbrBackground = nullptr;
     wc.lpszClassName = L"CalculatorV3Window";
 
