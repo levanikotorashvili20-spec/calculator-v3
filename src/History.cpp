@@ -1,5 +1,36 @@
 #include "History.h"
 #include <fstream>
+#include <shlobj.h>
+
+#pragma comment(lib, "shell32.lib")
+#pragma comment(lib, "ole32.lib")
+#pragma comment(lib, "uuid.lib")
+
+/* ============================================
+   ისტორიის ფაილის სრული გზა:
+   C:\Users\<მომხმარებელი>\AppData\Local\Calculator\history.txt
+
+   ერთხელ ითვლება და მერე ინახება
+   ============================================ */
+static const std::wstring& HistoryFilePath()
+{
+    static std::wstring path;          /* ფუნქციის static ცვლადი — გამოძახებებს შორის რჩება */
+    if (!path.empty())
+        return path;                   /* უკვე გამოვთვალეთ */
+
+    PWSTR base = nullptr;
+    if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, &base))) {
+        std::wstring dir = std::wstring(base) + L"\\Calculator";
+        CreateDirectoryW(dir.c_str(), nullptr);   /* თუ უკვე არსებობს — არაფერს აკეთებს */
+        path = dir + L"\\history.txt";
+    } else {
+        path = L"history.txt";                    /* სარეზერვო ვარიანტი */
+    }
+
+    CoTaskMemFree(base);               /* Windows-მა მოგვცა მეხსიერება — ჩვენ ვათავისუფლებთ */
+    return path;
+}
+
 
 /* ============================================
    wstring → UTF-8 (ფაილში სწორად ჩასაწერად)
@@ -41,7 +72,7 @@ void History::Clear()
    ============================================ */
 void History::AppendToFile(const std::wstring& expression, const std::wstring& result)
 {
-    std::ofstream file("history.txt", std::ios::app);
+        std::ofstream file(HistoryFilePath().c_str(), std::ios::app);
     if (!file) return;
 
     SYSTEMTIME st;
