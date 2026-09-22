@@ -6,7 +6,7 @@ Win32 GUI კალკულატორი, დაწერილი C++-ში
 
 
 
-!\[Calculator Screenshot](screenshot.png)
+![Calculator Screenshot](screenshot.png)
 
 
 
